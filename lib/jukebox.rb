@@ -16,21 +16,32 @@ def help
   - play : lets you choose a song to play
   - exit : exits this program'
 end
-
 def play(array)
 puts "Please enter a song name or number:"
+num_str = '12345678'
 choice = gets.chomp
-  array.each do |song|
-    if choice == song
-      puts "Playing #{song}"
-      break
-    elsif array.index(song) == choice.to_i - 1
-      puts "Playing #{song}"
-      break
-    else
+  count = 0
+  while count < array.length
+    if choice != array[count] && !(num_str.index(choice))
       puts 'Invalid input, please try again'
+      return 'Invalid input, please try again'
+    elsif array.index(choice)
+      puts "Playing #{choice}"
+      return
+    else
+      puts "Playing #{array[choice.to_i-1]}"
+      return
     end
+    count += 1
   end
+end
+
+def help
+  puts 'I accept the following commands:
+  - help : displays this help message
+  - list : displays a list of songs you can play
+  - play : lets you choose a song to play
+  - exit : exits this program'
 end
 
 def list(array)
@@ -47,7 +58,7 @@ def run(array)
   help
   puts 'Please enter a command:'
   command = gets.chomp
-  until command == 'exit'
+  if command != 'exit'
     if command == 'list'
       list(array)
       run(array)
@@ -59,6 +70,7 @@ def run(array)
     else
       run(array)
     end
+  else
+    exit_jukebox
   end
-  exit_jukebox
 end
